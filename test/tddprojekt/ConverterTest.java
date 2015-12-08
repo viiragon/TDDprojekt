@@ -28,6 +28,8 @@ public class ConverterTest {
 
     private final double delta = 0.001;
 
+    //W1
+    
     @Test
     public void theSameUnitsTest() {
         double number = 5;
@@ -35,6 +37,8 @@ public class ConverterTest {
         assertEquals(number, theSame, delta);
     }
 
+    //W2
+    
     @Test
     public void gramsToFuntsTest() {
         double gram = 1000;
@@ -49,6 +53,8 @@ public class ConverterTest {
         assertEquals(gram, 2267.961, delta);
     }
 
+    //W3
+    
     @Test
     public void metricPrefixesTest() {
         double gram = 1000;
@@ -66,6 +72,8 @@ public class ConverterTest {
         assertEquals(kilogram, 1, delta);
     }
 
+    //W4
+    
     @Test(expected = UnitNotFoundException.class)
     public void fromUnitDoesNotExistTest() {
         Converter.convert(1, "stołek", "mg");
@@ -80,9 +88,49 @@ public class ConverterTest {
     public void fromUnitWithGoodPrefixDoesNotExistTest() {
         Converter.convert(1, "daCHÓWKA", "g");
     }
-    
+
     @Test(expected = UnitNotFoundException.class)
     public void toUnitWithGoodPrefixDoesNotExistTest() {
         Converter.convert(1, "lb", "kALAFIOR");
     }
+
+    //W5
+
+    @Test
+    public void matrixTest() {
+        double wejscie[] = {10, 20, 46};
+        double wyjscie[] = Converter.convert(wejscie, "g", "lb");
+        assertEquals(wyjscie[0], 0.022, delta);
+        assertEquals(wyjscie[1], 0.044, delta);
+        assertEquals(wyjscie[2], 0.101, delta);
+    }
+
+    //W6
+
+    @Test
+    public void kilometersToMile() {
+        double kilometr = 5;
+        double mila = Converter.convert(kilometr, "km", "mi");
+        assertEquals(mila, 3.107, delta);
+    }
+
+    @Test
+    public void milesToKilometers() {
+        double mila = 5;
+        double kilometr = Converter.convert(mila, "mi", "km");
+        assertEquals(kilometr, 8.046, delta);
+    }
+
+    //W7
+
+    @Test(expected = WrongCategoryException.class)
+    public void fromKilometersToGrams() {
+        Converter.convert(1, "km", "g");
+    }
+
+    @Test(expected = WrongCategoryException.class)
+    public void fromFuntsToMiles() {
+        Converter.convert(1, "lb", "mi");
+    }
+
 }
